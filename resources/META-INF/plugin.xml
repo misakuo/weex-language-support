@@ -2,10 +2,28 @@
     <id>com.taobao.weex.lang</id>
     <name>Weex Language Support</name>
     <version>1.0</version>
-    <vendor email="moxun.ljf@alibaba-inc.com" url="http://alibaba.github.io/weex/index.html">Weex</vendor>
+    <vendor email="furmint@foxmail.com" url="https://github.com/misakuo/weex-language-support">moxun</vendor>
 
     <description><![CDATA[
-      Language support for weex script.
+      Weex Language support for Intellij.<br>
+      Target weex version: 0.7+ <br>
+      <b>Features:</b> <br>
+      <ul>
+      <li>weex file structural inspection</li>
+      <li>weex component tag completion and lint</li>
+      <li>weex component attributes completion and lint</li>
+      <li>lint and quick fix for mustache</li>
+      <li>references link and find usages support</li>
+      <li>custom weex rules support</li>
+      </ul><br>
+      <b>Todo:</b><br>
+      <ul>
+      <li>open declaration for component</li>
+      <li>open document support for component</li>
+      <li>running and debug configuration support</li>
+      </ul>
+      This is an unofficial tool, but I will use my spare time to ensure support for it.<br>
+      Welcome any feedback for this plugin or weex.
     ]]></description>
 
     <change-notes><![CDATA[

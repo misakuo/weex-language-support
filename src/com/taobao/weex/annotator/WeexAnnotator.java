@@ -201,8 +201,14 @@ public class WeexAnnotator implements Annotator {
                     if (validAttr == null) {
                         ret = verifyVarAndFunction("var", bindVar);
                     } else {
-                        type = validAttr.valueType;
-                        ret = verifyDataType(validAttr.valueType, bindVar);
+                        if (!inRepeat(xmlTag)) {
+                            type = validAttr.valueType;
+                            ret = verifyDataType(validAttr.valueType, bindVar);
+                        }
+                    }
+                    if (inRepeat(xmlTag)) {
+                        //repeat 绑定数组内的数据在lint时可能不存在, 跳过检测
+                        ret = new LintResult(LintResultType.PASSED, "Skip repeat tag");
                     }
                     if (!ret.passed()) {
                         Annotation annotation = annotationHolder
@@ -236,7 +242,7 @@ public class WeexAnnotator implements Annotator {
                 }
             }
 
-            if (xmlTag.getSubTags().length == 0) {
+            if (xmlTag.getSubTags().length == 0 && !inRepeat(xmlTag)) {
                 String value = xmlTag.getValue().getText();
                 if (WeexFileUtil.containsMustacheValue(value)) {
                     Map<String, TextRange> vars = WeexFileUtil.getVars(value);
@@ -269,6 +275,22 @@ public class WeexAnnotator implements Annotator {
             }
         } else {
             //unsupported tag
+        }
+    }
+
+    private boolean inRepeat(XmlTag tag) {
+        if (tag == null) {
+            return false;
+        }
+
+        if ("template".equals(tag.getName())) {
+            return false;
+        }
+
+        if (tag.getAttribute("repeat") != null) {
+            return true;
+        } else {
+            return inRepeat(tag.getParentTag());
         }
     }
 
