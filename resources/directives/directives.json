@@ -1,0 +1,532 @@
+[
+  {
+    "tag": "common",
+    "attrs": [
+      {
+        "name": "repeat",
+        "valuePattern": "mustache",
+        "valueEnum": null,
+        "valueType": "array"
+      },
+      {
+        "name": "if",
+        "valuePattern": null,
+        "valueEnum": [
+          "true",
+          "false"
+        ],
+        "valueType": "boolean"
+      },
+      {
+        "name": "append",
+        "valuePattern": null,
+        "valueEnum": [
+          "tree",
+          "node"
+        ],
+        "valueType": "var"
+      },
+      {
+        "name": "onclick",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "onlongpress",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "onappear",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "ondisappear",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "onviewappear",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "onviewdisappear",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      }
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "div",
+    "attrs": [
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "scroller",
+    "attrs": [
+      {
+        "name": "show-scrollbar",
+        "valuePattern": null,
+        "valueEnum": [
+          "true",
+          "false"
+        ],
+        "valueType": "boolean"
+      },
+      {
+        "name": "scroll-direction",
+        "valuePattern": null,
+        "valueEnum": [
+          "horizontal",
+          "vertical"
+        ],
+        "valueType": "var"
+      }
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "list",
+    "attrs": [
+      {
+        "name": "loadmoreoffset",
+        "valuePattern": "number",
+        "valueEnum": null,
+        "valueType": "number"
+      }
+    ],
+    "parent": null,
+    "child": [
+      "cell",
+      "header",
+      "refresh",
+      "loading"
+    ]
+  },
+  {
+    "tag": "cell",
+    "attrs": [
+    ],
+    "parent": [
+      "list"
+    ],
+    "child": null
+  },
+  {
+    "tag": "text",
+    "attrs": [
+      {
+        "name": "value",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      }
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "image",
+    "attrs": [
+      {
+        "name": "resize",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "src",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      }
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "input",
+    "attrs": [
+      {
+        "name": "value",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "type",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "placeholder",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "disabled",
+        "valuePattern": null,
+        "valueEnum": [
+          "true",
+          "false"
+        ],
+        "valueType": "boolean"
+      },
+      {
+        "name": "autofocus",
+        "valuePattern": null,
+        "valueEnum": [
+          "true",
+          "false"
+        ],
+        "valueType": "boolean"
+      },
+      {
+        "name": "maxlength",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "number"
+      },
+      {
+        "name": "oninput",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "onchange",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "onfocus",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "onblur",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      }
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "switch",
+    "attrs": [
+      {
+        "name": "checked",
+        "valuePattern": null,
+        "valueEnum": [
+          "true",
+          "false"
+        ],
+        "valueType": "boolean"
+      }
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "slider",
+    "attrs": [
+      {
+        "name": "auto-play",
+        "valuePattern": null,
+        "valueEnum": [
+          "true",
+          "false"
+        ],
+        "valueType": "boolean"
+      },
+      {
+        "name": "interval",
+        "valuePattern": "number",
+        "valueEnum": null,
+        "valueType": "number"
+      }
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "indicator",
+    "attrs": [
+    ],
+    "parent": [
+      "slider"
+    ],
+    "child": null
+  },
+  {
+    "tag": "video",
+    "attrs": [
+      {
+        "name": "play-status",
+        "valuePattern": null,
+        "valueEnum": [
+          "play",
+          "pause"
+        ],
+        "valueType": "var"
+      },
+      {
+        "name": "auto-play",
+        "valuePattern": null,
+        "valueEnum": [
+          "true",
+          "false"
+        ],
+        "valueType": "boolean"
+      },
+      {
+        "name": "onstart",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "onfinish",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "onfail",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      }
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "a",
+    "attrs": [
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "web",
+    "attrs": [
+      {
+        "name": "src",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "onpagestart",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "onpagefinish",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "onerror",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      }
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "wxc-tabbar",
+    "attrs": [
+      {
+        "name": "tab-items",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "array"
+      },
+      {
+        "name": "selected-color",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "unselected-color",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "tabBar.onClick",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      }
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "wxc-navpage",
+    "attrs": [
+      {
+        "name": "title",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "title-color",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "left-item-title",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "left-item-color",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "right-item-title",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "right-item-color",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "left-item-src",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "right-item-src",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "var"
+      },
+      {
+        "name": "naviBar.leftItem.click",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      },
+      {
+        "name": "naviBar.rightItem.click",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      }
+    ],
+    "parent": null,
+    "child": null
+  },
+  {
+    "tag": "refresh",
+    "attrs": [
+      {
+        "name": "display",
+        "valuePattern": null,
+        "valueEnum": [
+          "show",
+          "hide"
+        ],
+        "valueType": "var"
+      },
+      {
+        "name": "onrefresh",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      }
+    ],
+    "parent": [
+      "list",
+      "scroller"
+    ],
+    "child": [
+      "loading-indicator"
+    ]
+  },
+  {
+    "tag": "loading",
+    "attrs": [
+      {
+        "name": "display",
+        "valuePattern": null,
+        "valueEnum": [
+          "show",
+          "hide"
+        ],
+        "valueType": "var"
+      },
+      {
+        "name": "onloading",
+        "valuePattern": null,
+        "valueEnum": null,
+        "valueType": "function"
+      }
+    ],
+    "parent": [
+      "list",
+      "scroller"
+    ],
+    "child": [
+      "loading-indicator"
+    ]
+  },
+  {
+    "tag": "header",
+    "attrs": [
+    ],
+    "parent": [
+      "list"
+    ],
+    "child": null
+  },
+  {
+    "tag": "loading-indicator",
+    "attrs": [
+    ],
+    "parent": [
+      "loading",
+      "refresh"
+    ],
+    "child": null
+  }
+]
