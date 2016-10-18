@@ -28,8 +28,14 @@
 
     <change-notes><![CDATA[
       <ul>
-      <li><b>1.0.1:</b> fix issue on attribute completion; support 'repeat={{item in list}}'</li>
-      <li><b>1.0:</b> created</li>
+      <li><b>1.0.1:</b>
+        <br> fix issue on attribute completion;
+        <br> support 'repeat={{item in list}}';
+        <br> fix issue <a href="https://github.com/misakuo/weex-language-support/issues/1">#1</a>.
+      </li>
+      <li><b>1.0:</b>
+        <br> created.
+      </li>
       </ul>
     ]]>
     </change-notes>
@@ -51,7 +57,6 @@
         <!-- Add your extensions here -->
         <applicationConfigurable instance="com.taobao.weex.custom.Settings"/>
         <fileTypeFactory implementation="com.taobao.weex.WeexFileTypeFactory"/>
-        <internalFileTemplate name="weex_script"/>
         <psi.referenceContributor implementation="com.taobao.weex.refrences.WeexReferenceContributor"/>
         <xml.tagNameProvider implementation="com.taobao.weex.tags.WeexTagNameProvider"/>
         <xml.elementDescriptorProvider implementation="com.taobao.weex.tags.WeexTagNameProvider"/>
@@ -62,10 +67,10 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="weex.new" class="com.taobao.weex.NewWeFileAction" text="Weex File"
-                description="Create new weex file" icon="/icons/icon_file.png">
-            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
-        </action>
+        <!--<action id="weex.new" class="com.taobao.weex.NewWeFileAction" text="Weex File"-->
+                <!--description="Create new weex file" icon="/icons/icon_file.png">-->
+            <!--<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>-->
+        <!--</action>-->
     </actions>
 
 </idea-plugin>
