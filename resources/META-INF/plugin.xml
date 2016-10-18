@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.taobao.weex.lang</id>
     <name>Weex Language Support</name>
-    <version>1.0</version>
+    <version>1.0.1</version>
     <vendor email="furmint@foxmail.com" url="https://github.com/misakuo/weex-language-support">moxun</vendor>
 
     <description><![CDATA[
@@ -27,7 +27,10 @@
     ]]></description>
 
     <change-notes><![CDATA[
-      created.
+      <ul>
+      <li><b>1.0.1:</b> fix issue on attribute completion; support 'repeat={{item in list}}'</li>
+      <li><b>1.0:</b> created</li>
+      </ul>
     ]]>
     </change-notes>
 

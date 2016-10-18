@@ -72,6 +72,14 @@ public class WeexAnnotator implements Annotator {
     private
     @NotNull
     LintResult verifyDataType(String type, String s) {
+
+        if (s.contains(" in ")) {
+            String[] tmp = s.split("\\s+in\\s+");
+            if (tmp.length == 2) {
+                s = tmp[1];
+            }
+        }
+
         LintResult result = new LintResult();
         if (moduleExports == null) {
             result.setCode(LintResultType.UNRESOLVED_VAR);
@@ -201,12 +209,12 @@ public class WeexAnnotator implements Annotator {
                     if (validAttr == null) {
                         ret = verifyVarAndFunction("var", bindVar);
                     } else {
-                        if (!inRepeat(xmlTag)) {
+                        if (!inRepeat(xmlTag) || "repeat".equals(attrName)) {
                             type = validAttr.valueType;
                             ret = verifyDataType(validAttr.valueType, bindVar);
                         }
                     }
-                    if (inRepeat(xmlTag)) {
+                    if (inRepeat(xmlTag) && !"repeat".equals(attrName)) {
                         //repeat 绑定数组内的数据在lint时可能不存在, 跳过检测
                         ret = new LintResult(LintResultType.PASSED, "Skip repeat tag");
                     }

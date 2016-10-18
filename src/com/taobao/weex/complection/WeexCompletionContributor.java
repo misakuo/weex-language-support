@@ -38,10 +38,7 @@ public class WeexCompletionContributor extends CompletionContributor {
                                             .withInsertHandler(new InsertHandler<LookupElement>() {
                                                 @Override
                                                 public void handleInsert(InsertionContext insertionContext, LookupElement lookupElement) {
-                                                    insertionContext.getDocument().replaceString(
-                                                            value.getTextOffset(),
-                                                            value.getTextOffset() + getTailLength(value) + lookupElement.getLookupString().length(),
-                                                            lookupElement.getLookupString());
+                                                    performInsert(value, insertionContext, lookupElement);
                                                 }
                                             })
                                             .withTypeText("Function"));
@@ -58,10 +55,7 @@ public class WeexCompletionContributor extends CompletionContributor {
                                             .withInsertHandler(new InsertHandler<LookupElement>() {
                                                 @Override
                                                 public void handleInsert(InsertionContext insertionContext, LookupElement lookupElement) {
-                                                    insertionContext.getDocument().replaceString(
-                                                            value.getTextOffset(),
-                                                            value.getTextOffset() + getTailLength(value) + lookupElement.getLookupString().length(),
-                                                            lookupElement.getLookupString());
+                                                    performInsert(value, insertionContext, lookupElement);
                                                 }
                                             })
                                             .withTypeText(vars.get(s)));
@@ -71,6 +65,20 @@ public class WeexCompletionContributor extends CompletionContributor {
                         }
                     }
                 });
+    }
+
+    private void performInsert(XmlAttributeValue value, InsertionContext insertionContext, LookupElement lookupElement) {
+        if (value.getText().startsWith("\"")) {
+            insertionContext.getDocument().replaceString(
+                    value.getTextOffset(),
+                    value.getTextOffset() + getTailLength(value) + lookupElement.getLookupString().length(),
+                    lookupElement.getLookupString());
+        } else {
+            insertionContext.getDocument().replaceString(
+                    value.getTextOffset() - 1,
+                    value.getTextOffset() + getTailLength(value) + lookupElement.getLookupString().length() - 1,
+                    "\"" + lookupElement.getLookupString() + "\"");
+        }
     }
 
     private int getTailLength(XmlAttributeValue value) {

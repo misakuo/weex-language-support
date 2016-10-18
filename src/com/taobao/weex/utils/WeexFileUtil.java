@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
  */
 public class WeexFileUtil {
 
+    private static String currentFileName = "";
     private static JSObjectLiteralExpression cachedExportsStatement;
     private static Map<String, String> vars = new ConcurrentHashMap<String, String>();
     private static Set<String> functions = new HashSet<String>();
@@ -81,7 +82,24 @@ public class WeexFileUtil {
         return false;
     }
 
+    private static void ensureFile(PsiElement element) {
+        String path = String.valueOf(System.currentTimeMillis());
+        if (element != null
+                && element.getContainingFile() != null
+                && element.getContainingFile().getVirtualFile() != null) {
+            path = element.getContainingFile().getVirtualFile().getPath();
+        }
+        if (!currentFileName.equals(path)) {
+            cachedExportsStatement = null;
+            vars.clear();
+            functions.clear();
+            currentFileName = path;
+        }
+    }
+
     public static JSObjectLiteralExpression getExportsStatement(PsiElement anyElementOnWeexScript) {
+        ensureFile(anyElementOnWeexScript);
+
         if (cachedExportsStatement != null) {
             return cachedExportsStatement;
         }
@@ -122,17 +140,25 @@ public class WeexFileUtil {
     }
 
     public static Map<String, String> getAllVarNames(PsiElement any) {
+        ensureFile(any);
         getVarDeclaration(any, String.valueOf(System.currentTimeMillis()));
         return vars;
     }
 
     public static Set<String> getAllFunctionNames(PsiElement any) {
+        ensureFile(any);
         getFunctionDeclaration(any, String.valueOf(System.currentTimeMillis()));
         return functions;
     }
 
     public static JSProperty getVarDeclaration(PsiElement anyElementOnWeexScript, String valueName) {
         valueName = valueName.replaceAll("\\{+", "").replaceAll("\\}+", "");
+        if (valueName.contains(" in ")) {
+            String[] tmp = valueName.split("\\s+in\\s+");
+            if (tmp.length == 2) {
+                valueName = tmp[1].trim();
+            }
+        }
         JSObjectLiteralExpression exports = getExportsStatement(anyElementOnWeexScript);
         vars.clear();
         if (exports != null) {
@@ -151,7 +177,10 @@ public class WeexFileUtil {
             for (PsiElement pe : data.getValue().getChildren()) {
                 if (pe instanceof JSProperty) {
                     String varName = ((JSProperty) pe).getName();
-                    vars.put(varName, getJSPropertyType((JSProperty) pe));
+                    String varValue = getJSPropertyType((JSProperty) pe);
+                    if (varName != null && varValue != null) {
+                        vars.put(varName, varValue);
+                    }
                     if (valueName.equals(varName)) {
                         return (JSProperty) pe;
                     }
