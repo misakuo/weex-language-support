@@ -1,5 +1,7 @@
 package com.taobao.weex.lint;
 
+import com.intellij.psi.PsiFile;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +16,7 @@ public class WeexTag {
     public CopyOnWriteArrayList<Attribute> attrs;
     public List<String> parent;
     public List<String> child;
+    public PsiFile declare;
 
     public Set<String> getExtAttrs() {
         Set<String> ret = new HashSet<String>();

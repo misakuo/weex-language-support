@@ -1,0 +1,16 @@
+<!--read only-->
+<built-in>
+    <component>div</component>
+    <component>scroller</component>
+    <component>list</component>
+    <component>cell</component>
+    <component>text</component>
+    <component>image</component>
+    <component>input</component>
+    <component>switch</component>
+    <component>slider</component>
+    <component>indicator</component>
+    <component>video</component>
+    <component>a</component>
+    <component>web</component>
+</built-in>

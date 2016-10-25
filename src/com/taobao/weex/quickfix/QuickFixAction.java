@@ -1,6 +1,7 @@
 package com.taobao.weex.quickfix;
 
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction;
+import com.intellij.notification.NotificationType;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
@@ -9,6 +10,7 @@ import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.util.IncorrectOperationException;
+import com.taobao.weex.utils.MessageUtil;
 import com.taobao.weex.utils.WeexFileUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -63,8 +65,8 @@ public class QuickFixAction extends BaseIntentionAction {
     public void invoke(@NotNull Project project, Editor editor, PsiFile psiFile) throws IncorrectOperationException {
         if (!"function".equals(type)) {
             int offset = WeexFileUtil.getExportsEndOffset(psiFile, "data");
-            hasComma(offset, editor);
             if (offset < 0) {
+                MessageUtil.showTopic(project, "QuickFix failed", "module.exports.data not found", NotificationType.WARNING);
                 return;
             }
             String template = name + ": " + getDefaultValue(type) + ",\n";
@@ -79,6 +81,7 @@ public class QuickFixAction extends BaseIntentionAction {
         } else {
             int offset = WeexFileUtil.getExportsEndOffset(psiFile, "methods");
             if (offset < 0) {
+                MessageUtil.showTopic(project, "QuickFix failed", "module.exports.methods not found", NotificationType.WARNING);
                 return;
             }
 
@@ -102,7 +105,7 @@ public class QuickFixAction extends BaseIntentionAction {
             if (range.getStartOffset() <= 0) {
                 return false;
             }
-            if (s.equals(",")) {
+            if (s.equals(",") || s.equals("{")) {
                 return true;
             } else if (Pattern.compile("\\s+").matcher(s).matches()) {
                 range = new TextRange(range.getStartOffset() - 1, range.getStartOffset());

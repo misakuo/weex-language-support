@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 /**
  * Created by moxun on 16/10/11.
@@ -81,6 +82,13 @@ public class WeexAnnotator implements Annotator {
         }
 
         LintResult result = new LintResult();
+
+        if (s.contains(".") || Pattern.compile("\\[\\d+\\]").matcher(s).matches()) {
+            result.setCode(LintResultType.PASSED);
+            result.setDesc("Skip analyse array or object");
+            return result;
+        }
+
         if (moduleExports == null) {
             result.setCode(LintResultType.UNRESOLVED_VAR);
             result.setDesc("Unresolved property '" + s + "'");
@@ -315,7 +323,8 @@ public class WeexAnnotator implements Annotator {
             } else {
                 if (!(element instanceof PsiWhiteSpace)
                         && !(element instanceof XmlProlog)
-                        && !(element instanceof XmlText)) {
+                        && !(element instanceof XmlText)
+                        && !(element instanceof XmlComment)) {
                     String s = element.getText();
                     if (s.length() > 20) {
                         s = s.substring(0, 20);

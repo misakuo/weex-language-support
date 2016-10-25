@@ -2,6 +2,8 @@ package com.taobao.weex.lint;
 
 import com.google.gson.Gson;
 import com.taobao.weex.custom.Settings;
+import com.taobao.weex.utils.ExtraModulesUtil;
+import com.taobao.weex.utils.Logger;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,6 +28,8 @@ public class DirectiveLint {
         if (tagNames != null) {
             tagNames.clear();
         }
+        mergeToBuiltIn(Settings.getRules());
+        Logger.info("Rebuild weex component caches, " + tags.length + " tags found.");
     }
 
     public static void prepare() {
@@ -35,22 +39,10 @@ public class DirectiveLint {
         mergeToBuiltIn(Settings.getRules());
     }
 
-    private static void loadBuiltInRules() {
-        InputStream is = DirectiveLint.class.getResourceAsStream("/directives/directives.json");
-        Gson gson = new Gson();
-        tags = gson.fromJson(new InputStreamReader(is), WeexTag[].class);
-        if (tags == null) {
-            tags = new WeexTag[0];
-        }
-    }
-
-    private static void mergeToBuiltIn(WeexTag[] customRules) {
-        if (tags == null) {
-            loadBuiltInRules();
-        }
+    private static void mergeToTags(List<WeexTag> from) {
         List<WeexTag> builtIn = new ArrayList<WeexTag>(Arrays.asList(tags));
-        if (customRules != null) {
-            for (WeexTag tag : customRules) {
+        if (from != null) {
+            for (WeexTag tag : from) {
                 if (containsTag(tag.tag)) {
                     WeexTag builtInTag = getBuiltInWeexTag(tag.tag);
                     if (builtInTag != null) {
@@ -64,6 +56,27 @@ public class DirectiveLint {
         tags = builtIn.toArray(new WeexTag[builtIn.size()]);
         if (tagNames != null) {
             tagNames.clear();
+        }
+    }
+
+    private static void loadBuiltInRules() {
+        InputStream is = DirectiveLint.class.getResourceAsStream("/directives/directives.json");
+        Gson gson = new Gson();
+        tags = gson.fromJson(new InputStreamReader(is), WeexTag[].class);
+        if (tags == null) {
+            tags = new WeexTag[0];
+        }
+        loadNodeModules();
+    }
+
+    private static void loadNodeModules() {
+        List<WeexTag> weexTags = ExtraModulesUtil.getTagsFromNodeModules();
+        mergeToTags(weexTags);
+    }
+
+    private static void mergeToBuiltIn(WeexTag[] customRules) {
+        if (customRules != null) {
+            mergeToTags(Arrays.asList(customRules));
         }
     }
 
@@ -138,6 +151,18 @@ public class DirectiveLint {
         }
         for (WeexTag tag : tags) {
             if (tag.tag.equals(tagName)) {
+                return tag;
+            }
+        }
+        return null;
+    }
+
+    public static WeexTag getCommonTag() {
+        if (tags == null) {
+            prepare();
+        }
+        for (WeexTag tag : tags) {
+            if (tag.tag.equals("common")) {
                 return tag;
             }
         }

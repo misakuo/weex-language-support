@@ -41,6 +41,7 @@ public class WeexCompletionContributor extends CompletionContributor {
                                                     performInsert(value, insertionContext, lookupElement);
                                                 }
                                             })
+                                            .withBoldness(true)
                                             .withTypeText("Function"));
                                 }
                             } else {
@@ -58,6 +59,7 @@ public class WeexCompletionContributor extends CompletionContributor {
                                                     performInsert(value, insertionContext, lookupElement);
                                                 }
                                             })
+                                            .withBoldness(true)
                                             .withTypeText(vars.get(s)));
 
                                 }

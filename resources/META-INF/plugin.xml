@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.taobao.weex.lang</id>
     <name>Weex Language Support</name>
-    <version>1.0.1</version>
+    <version>1.1</version>
     <vendor email="furmint@foxmail.com" url="https://github.com/misakuo/weex-language-support">moxun</vendor>
 
     <description><![CDATA[
@@ -15,10 +15,10 @@
       <li>lint and quick fix for mustache</li>
       <li>references link and find usages support</li>
       <li>custom weex rules support</li>
+      <li>open declaration for component</li>
       </ul><br>
       <b>Todo:</b><br>
       <ul>
-      <li>open declaration for component</li>
       <li>open document support for component</li>
       <li>running and debug configuration support</li>
       </ul>
@@ -28,6 +28,14 @@
 
     <change-notes><![CDATA[
       <ul>
+      <li><b>1.1:</b>
+        <br> support tag & attribute completion from local and global node_modules(need to set);
+        <br> support open deceleration from weex tag to .we file;
+        <br> bug fix and other optimization.
+      </li>
+      <li><b>1.0.2:</b>
+        <br> restore new file action.
+      </li>
       <li><b>1.0.1:</b>
         <br> fix issue on attribute completion;
         <br> support 'repeat={{item in list}}';
@@ -66,11 +74,11 @@
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
-        <!--<action id="weex.new" class="com.taobao.weex.NewWeFileAction" text="Weex File"-->
-                <!--description="Create new weex file" icon="/icons/icon_file.png">-->
-            <!--<add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>-->
-        <!--</action>-->
+        <!--Add your actions here -->
+        <action id="weex.new" class="com.taobao.weex.NewWeFileAction" text="Weex File"
+                description="Create new weex file" icon="/icons/icon_file.png">
+            <add-to-group group-id="NewGroup" anchor="before" relative-to-action="NewFile"/>
+        </action>
     </actions>
 
 </idea-plugin>
