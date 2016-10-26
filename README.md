@@ -1,7 +1,7 @@
 # weex-language-support
 Weex language support for IntelliJ    
 
-**可加入QQ群 335401266 以更快地反馈问题和获得支持**    
+**可加入QQ群 335401226 以更快地反馈问题和获得支持**    
 
 ###Features:    
 #### Tag completion    
