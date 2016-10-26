@@ -38,4 +38,13 @@ public class WeexTag {
         }
         return null;
     }
+
+    @Override
+    public String toString() {
+        String file = "null";
+        if (declare != null) {
+            file = declare.getOriginalFile().getVirtualFile().getName();
+        }
+        return "\n{" + tag + "} : " + file;
+    }
 }

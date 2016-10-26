@@ -144,7 +144,7 @@
       {
         "name": "resize",
         "valuePattern": null,
-        "valueEnum": null,
+        "valueEnum": ["cover","contain","stretch"],
         "valueType": "var"
       },
       {
@@ -350,104 +350,6 @@
       },
       {
         "name": "onerror",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "function"
-      }
-    ],
-    "parent": null,
-    "child": null
-  },
-  {
-    "tag": "wxc-tabbar",
-    "attrs": [
-      {
-        "name": "tab-items",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "array"
-      },
-      {
-        "name": "selected-color",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "var"
-      },
-      {
-        "name": "unselected-color",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "var"
-      },
-      {
-        "name": "tabBar.onClick",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "function"
-      }
-    ],
-    "parent": null,
-    "child": null
-  },
-  {
-    "tag": "wxc-navpage",
-    "attrs": [
-      {
-        "name": "title",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "var"
-      },
-      {
-        "name": "title-color",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "var"
-      },
-      {
-        "name": "left-item-title",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "var"
-      },
-      {
-        "name": "left-item-color",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "var"
-      },
-      {
-        "name": "right-item-title",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "var"
-      },
-      {
-        "name": "right-item-color",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "var"
-      },
-      {
-        "name": "left-item-src",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "var"
-      },
-      {
-        "name": "right-item-src",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "var"
-      },
-      {
-        "name": "naviBar.leftItem.click",
-        "valuePattern": null,
-        "valueEnum": null,
-        "valueType": "function"
-      },
-      {
-        "name": "naviBar.rightItem.click",
         "valuePattern": null,
         "valueEnum": null,
         "valueType": "function"

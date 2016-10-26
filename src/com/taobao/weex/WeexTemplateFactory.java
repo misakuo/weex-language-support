@@ -16,7 +16,7 @@ import java.util.Properties;
  */
 public class WeexTemplateFactory {
 
-    public static final String NEW_WEEX_TEMPLATE_NAME = "weex_script";
+    public static final String NEW_WEEX_TEMPLATE_NAME = "Weex File";
 
     public static PsiFile createFromTemplate(final PsiDirectory directory, final String name,
                                              String fileName, String templateName,

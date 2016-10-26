@@ -23,6 +23,22 @@ public class DirectiveLint {
             "a"
     };
 
+    public static void dump() {
+        if (tags != null) {
+            List list = Arrays.asList(tags);
+            Logger.warn("Tags: (" + list.size() + ") " + list.toString());
+        } else {
+            Logger.warn("Tags: null");
+        }
+        if (tagNames != null) {
+            Logger.warn("Tag names: (" + tagNames.size() + ") " + tagNames.toString());
+        } else {
+            Logger.warn("Tag names: null");
+        }
+        List list1 = ExtraModulesUtil.getTagsFromNodeModules();
+        Logger.warn("Tag from node_modules: (" + list1.size() + ") " + list1.toString());
+    }
+
     public static void reset() {
         loadBuiltInRules();
         if (tagNames != null) {
@@ -72,6 +88,7 @@ public class DirectiveLint {
     private static void loadNodeModules() {
         List<WeexTag> weexTags = ExtraModulesUtil.getTagsFromNodeModules();
         mergeToTags(weexTags);
+        Logger.debug(weexTags.toString());
     }
 
     private static void mergeToBuiltIn(WeexTag[] customRules) {
@@ -128,6 +145,9 @@ public class DirectiveLint {
                 }
             }
         }
+
+        Logger.debug(tagNames.toString());
+        Logger.debug(Arrays.asList(tags).toString());
 
         return tagNames;
     }

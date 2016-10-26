@@ -58,7 +58,7 @@ public class Logger {
             StackTraceElement ste = new Throwable().getStackTrace()[2];
             String prefix = ste.getFileName();
             int lineNum = ste.getLineNumber();
-            System.err.println("D/weex language support: (" + prefix + ":" + lineNum + ") " + text);
+            return "D/weex language support: (" + prefix + ":" + lineNum + ") " + text;
         }
         return text;
     }

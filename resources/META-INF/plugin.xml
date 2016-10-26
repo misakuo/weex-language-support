@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.taobao.weex.lang</id>
     <name>Weex Language Support</name>
-    <version>1.1</version>
+    <version>1.1.1</version>
     <vendor email="furmint@foxmail.com" url="https://github.com/misakuo/weex-language-support">moxun</vendor>
 
     <description><![CDATA[
@@ -22,12 +22,19 @@
       <li>open document support for component</li>
       <li>running and debug configuration support</li>
       </ul>
+      <br>
+      <b>For Chinese developers:</b><br>
+      加入QQ群 <b>335401226</b> 更快地反馈问题和获取支持<br><br>
       This is an unofficial tool, but I will use my spare time to ensure support for it.<br>
       Welcome any feedback for this plugin or weex.
     ]]></description>
 
     <change-notes><![CDATA[
       <ul>
+      <li><b>1.1.1:</b>
+        <br> better support for component in node_modules;
+        <br> fix issue <a href="https://github.com/misakuo/weex-language-support/issues/4">#4</a>.
+      </li>
       <li><b>1.1:</b>
         <br> support tag & attribute completion from local and global node_modules(need to set);
         <br> support open deceleration from weex tag to .we file;

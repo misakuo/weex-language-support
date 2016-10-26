@@ -29,9 +29,11 @@ public class ExtraModulesUtil {
     public static List<WeexTag> getTagsFromNodeModules() {
         List<WeexTag> list = new ArrayList<WeexTag>();
         Project project = ProjectUtil.guessCurrentProject(null);
+        Logger.debug(project.toString());
         VirtualFile vf = project.getBaseDir();
         PsiDirectory[] localModules = new PsiDirectory[0];
         if (vf != null && vf.isDirectory()) {
+            Logger.debug("Project root dir: " + vf.toString());
             PsiDirectory dir = PsiDirectoryFactory.getInstance(project).createDirectory(vf);
             localModules = getNodeModules(dir);
             for (PsiDirectory directory : localModules) {
@@ -40,10 +42,13 @@ public class ExtraModulesUtil {
                     list.add(parseToTag(comp));
                 }
             }
+        } else {
+            Logger.debug("Project base dir is null");
         }
 
         for (PsiDirectory dir : getGlobalModules(localModules)) {
             List<PsiFile> comps = getComponents(dir, getMain(dir));
+            Logger.debug(comps.toString());
             for (PsiFile comp : comps) {
                 list.add(parseToTag(comp));
             }
@@ -77,6 +82,7 @@ public class ExtraModulesUtil {
                 Logger.info("Module " + global + " already exists locally, skip it.");
             }
         }
+        Logger.debug(result.toString());
         return result;
     }
 
@@ -88,11 +94,28 @@ public class ExtraModulesUtil {
         Map<String, String> vars = WeexFileUtil.getAllVarNames(comp);
         for (Map.Entry<String, String> entry : vars.entrySet()) {
             Attribute attribute = new Attribute();
-            attribute.name = entry.getKey();
+            attribute.name = convertAttrName(entry.getKey());
             attribute.valueType = getType(entry.getValue());
             weexTag.attrs.add(attribute);
         }
         return weexTag;
+    }
+
+    private static String convertAttrName(String name) {
+        char[] chars = name.toCharArray();
+        StringBuilder sb = new StringBuilder();
+        for (char c: chars) {
+            if (Character.isUpperCase(c)) {
+                if (sb.length() == 0) {
+                    sb.append(Character.toLowerCase(c));
+                } else {
+                    sb.append('-').append(Character.toLowerCase(c));
+                }
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
     }
 
     private static String getType(String realType) {
@@ -193,5 +216,11 @@ public class ExtraModulesUtil {
             }
         }
         return name;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(convertAttrName("Foo"));
+        System.out.println(convertAttrName("HowAreYou"));
+        System.out.println(convertAttrName("areYouOK"));
     }
 }

@@ -55,7 +55,7 @@ public class WeexFileUtil {
 
     public static String getJSPropertyType(JSProperty jsProperty) {
         JSType t = jsProperty.getType();
-        String typeString = null;
+        String typeString = "var";
         if (t == null) {
             if (jsProperty.getValue() instanceof JSObjectLiteralExpression) {
                 typeString = "Object";

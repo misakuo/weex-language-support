@@ -19,6 +19,7 @@ import com.intellij.ui.table.JBTable;
 import com.taobao.weex.lint.DirectiveLint;
 import com.taobao.weex.lint.WeexTag;
 import com.taobao.weex.utils.ExtraModulesUtil;
+import com.taobao.weex.utils.Logger;
 import org.apache.http.util.TextUtils;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
@@ -47,6 +48,7 @@ public class Settings implements Configurable {
     private JScrollPane panel;
     private JLabel message;
     private JButton rebuild;
+    private JButton dump;
     private DefaultTableModel model;
     private Vector<Vector> data = new Vector<Vector>();
     private Vector<String> names = new Vector<String>();
@@ -146,6 +148,15 @@ public class Settings implements Configurable {
             @Override
             public void actionPerformed(ActionEvent e) {
                 DirectiveLint.reset();
+            }
+        });
+
+        dump.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Logger.warn("======== Begin to debug info ========");
+                DirectiveLint.dump();
+                Logger.warn("========  End to debug info  ========");
             }
         });
 
