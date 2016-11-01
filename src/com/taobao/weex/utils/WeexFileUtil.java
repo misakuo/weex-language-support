@@ -152,15 +152,10 @@ public class WeexFileUtil {
     }
 
     public static JSProperty getVarDeclaration(PsiElement anyElementOnWeexScript, String valueName) {
-        valueName = valueName.replaceAll("\\{+", "").replaceAll("\\}+", "");
-        if (valueName.contains(" in ")) {
-            String[] tmp = valueName.split("\\s+in\\s+");
-            if (tmp.length == 2) {
-                valueName = tmp[1].trim();
-            }
-        }
+        valueName = CodeUtil.getVarNameFromMustache(valueName);
         JSObjectLiteralExpression exports = getExportsStatement(anyElementOnWeexScript);
         vars.clear();
+        JSProperty ret = null;
         if (exports != null) {
             try {
                 PsiFile file = exports.getContainingFile();
@@ -182,19 +177,20 @@ public class WeexFileUtil {
                         vars.put(varName, varValue);
                     }
                     if (valueName.equals(varName)) {
-                        return (JSProperty) pe;
+                        ret = (JSProperty) pe;
                     }
                 }
 
             }
         }
-        return null;
+        return ret;
     }
 
     public static JSFunctionExpression getFunctionDeclaration(PsiElement anyElementOnWeexScript, String valueName) {
-        valueName = valueName.replaceAll("\\{+", "").replaceAll("\\}+", "");
+        valueName = CodeUtil.getFunctionNameFromMustache(valueName);
         JSObjectLiteralExpression exports = getExportsStatement(anyElementOnWeexScript);
         functions.clear();
+        JSFunctionExpression ret = null;
         if (exports != null) {
             try {
                 PsiFile file = exports.getContainingFile();
@@ -212,7 +208,7 @@ public class WeexFileUtil {
                             if (e1 instanceof JSFunctionExpression) {
                                 functions.add(((JSFunctionExpression) e1).getName());
                                 if (valueName.equals(((JSFunctionExpression) e1).getName())) {
-                                    return (JSFunctionExpression) e1;
+                                    ret = (JSFunctionExpression) e1;
                                 }
                             }
                         }
@@ -220,7 +216,7 @@ public class WeexFileUtil {
                 }
             }
         }
-        return null;
+        return ret;
     }
 
     public static int getExportsEndOffset(PsiElement anyElementOnWeexScript, String name) {
@@ -262,7 +258,7 @@ public class WeexFileUtil {
         Pattern p = Pattern.compile("\\{\\{.+?\\}\\}");
         Matcher m = p.matcher(src);
         while (m.find()) {
-            String g = m.group().replaceAll("\\{+", "").replaceAll("\\}+", "");
+            String g = m.group().replaceAll("\\{+", "").replaceAll("\\}+", "").trim();
             TextRange textRange = new TextRange(m.start(), m.end());
             results.put(g, textRange);
         }

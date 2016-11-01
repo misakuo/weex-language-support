@@ -4,6 +4,7 @@ import com.intellij.lang.javascript.psi.JSObjectLiteralExpression;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.xml.XmlAttributeValue;
+import com.taobao.weex.utils.CodeUtil;
 import com.taobao.weex.utils.WeexFileUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -45,7 +46,7 @@ public class MustacheVarReference extends PsiReferenceBase<PsiElement> {
         if (exports == null) {
             return null;
         } else {
-            String valueName = ((XmlAttributeValue) element).getValue().replaceAll("\\{+", "").replaceAll("\\}+", "");
+            String valueName = CodeUtil.getVarNameFromMustache(((XmlAttributeValue) element).getValue());
             if ("function".equals(type)) {
                 return WeexFileUtil.getFunctionDeclaration(value, valueName);
             } else {

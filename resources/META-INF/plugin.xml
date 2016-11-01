@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.taobao.weex.lang</id>
     <name>Weex Language Support</name>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
     <vendor email="furmint@foxmail.com" url="https://github.com/misakuo/weex-language-support">moxun</vendor>
 
     <description><![CDATA[
@@ -31,6 +31,11 @@
 
     <change-notes><![CDATA[
       <ul>
+      <li><b>1.2.0:</b>
+        <br> support for tag text completion <a href="https://github.com/misakuo/weex-language-support/issues/7">#7</a> (active by intention);
+        <br> fix issue <a href="https://github.com/misakuo/weex-language-support/issues/6">#6</a>.
+        <br> other bug fix.
+      </li>
       <li><b>1.1.1:</b>
         <br> better support for component in node_modules;
         <br> fix issue <a href="https://github.com/misakuo/weex-language-support/issues/4">#4</a>.
@@ -70,6 +75,16 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <intentionAction>
+            <className>com.taobao.weex.intention.TagTextIntention</className>
+            <category>Weex</category>
+            <descriptionDirectoryName>WeexTagTextCompletion</descriptionDirectoryName>
+        </intentionAction>
+        <intentionAction>
+            <className>com.taobao.weex.intention.DocumentIntention</className>
+            <category>Weex</category>
+            <descriptionDirectoryName>WeexDocument</descriptionDirectoryName>
+        </intentionAction>
         <applicationConfigurable instance="com.taobao.weex.custom.Settings"/>
         <fileTypeFactory implementation="com.taobao.weex.WeexFileTypeFactory"/>
         <psi.referenceContributor implementation="com.taobao.weex.refrences.WeexReferenceContributor"/>

@@ -38,8 +38,11 @@ public class ExtraModulesUtil {
             localModules = getNodeModules(dir);
             for (PsiDirectory directory : localModules) {
                 List<PsiFile> comps = getComponents(directory, getMain(directory));
+                String homePage = getHomePage(directory);
                 for (PsiFile comp : comps) {
-                    list.add(parseToTag(comp));
+                    WeexTag tag = parseToTag(comp);
+                    tag.document = homePage;
+                    list.add(tag);
                 }
             }
         } else {
@@ -48,13 +51,33 @@ public class ExtraModulesUtil {
 
         for (PsiDirectory dir : getGlobalModules(localModules)) {
             List<PsiFile> comps = getComponents(dir, getMain(dir));
+            String homePage = getHomePage(dir);
             Logger.debug(comps.toString());
             for (PsiFile comp : comps) {
-                list.add(parseToTag(comp));
+                WeexTag tag = parseToTag(comp);
+                tag.document = homePage;
+                list.add(tag);
             }
         }
 
         return list;
+    }
+
+    private static String getHomePage(PsiDirectory directory) {
+        PsiFile pkg = directory.findFile("package.json");
+        if (pkg != null && pkg instanceof JsonFile) {
+            if (((JsonFile) pkg).getTopLevelValue() instanceof JsonObject) {
+                JsonObject object = (JsonObject) ((JsonFile) pkg).getTopLevelValue();
+                if (object != null) {
+                    JsonProperty homePage = object.findProperty("homepage");
+                    if (homePage != null && homePage.getValue() != null && homePage.getValue() instanceof JsonStringLiteral) {
+                        JsonStringLiteral propValue = (JsonStringLiteral) homePage.getValue();
+                        return propValue.getValue();
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private static List<PsiDirectory> getGlobalModules(PsiDirectory[] localModules) {

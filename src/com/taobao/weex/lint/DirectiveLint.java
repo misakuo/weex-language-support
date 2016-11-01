@@ -156,7 +156,13 @@ public class DirectiveLint {
         return Arrays.asList(htmlTags);
     }
 
-    private static boolean containsTag(String tagName) {
+    public static boolean containsTag(String tagName) {
+        if (tagName == null || "common".equals(tagName)) {
+            return false;
+        }
+        if (tags == null) {
+            prepare();
+        }
         for (WeexTag tag : tags) {
             if (tagName.equals(tag.tag)) {
                 return true;

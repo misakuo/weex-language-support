@@ -17,6 +17,7 @@ public class WeexTag {
     public List<String> parent;
     public List<String> child;
     public PsiFile declare;
+    public String document;
 
     public Set<String> getExtAttrs() {
         Set<String> ret = new HashSet<String>();

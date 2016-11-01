@@ -4,8 +4,6 @@ import com.intellij.openapi.util.Condition;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.html.dtd.HtmlNSDescriptorImpl;
-import com.intellij.psi.impl.source.xml.XmlDocumentImpl;
-import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.util.ArrayUtil;
@@ -42,17 +40,12 @@ public class WeexTagDescriptor implements XmlElementDescriptor{
 
     @Override
     public XmlElementDescriptor[] getElementsDescriptors(XmlTag context) {
-        XmlDocumentImpl xmlDocument = PsiTreeUtil.getParentOfType(context, XmlDocumentImpl.class);
-        if (xmlDocument == null) return EMPTY_ARRAY;
-        return xmlDocument.getRootTagNSDescriptor().getRootElementsDescriptors(xmlDocument);
+        return EMPTY_ARRAY;
     }
 
     @Override
     public XmlElementDescriptor getElementDescriptor(XmlTag childTag, XmlTag contextTag) {
-        XmlTag parent = contextTag.getParentTag();
-        if (parent == null) return null;
-        final XmlNSDescriptor descriptor = parent.getNSDescriptor(childTag.getNamespace(), true);
-        return descriptor == null ? null : descriptor.getElementDescriptor(childTag);
+        return null;
     }
 
     @Override

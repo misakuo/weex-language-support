@@ -3,11 +3,13 @@ package com.taobao.weex.complection;
 import com.intellij.codeInsight.completion.*;
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
+import com.intellij.lang.javascript.psi.JSProperty;
 import com.intellij.patterns.PlatformPatterns;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.xml.XmlAttributeValue;
 import com.intellij.util.ProcessingContext;
 import com.taobao.weex.WeexIcons;
+import com.taobao.weex.utils.CodeUtil;
 import com.taobao.weex.utils.WeexFileUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -47,8 +49,21 @@ public class WeexCompletionContributor extends CompletionContributor {
                             } else {
                                 Map<String, String> vars = WeexFileUtil.getAllVarNames(value);
                                 for (String s : vars.keySet()) {
-                                    if (!WeexFileUtil.hasSameType(WeexFileUtil.getValueType(value), vars.get(s))) {
-                                        continue;
+                                    String typeText = vars.get(s);
+                                    String vType = WeexFileUtil.getValueType(value);
+                                    if (!WeexFileUtil.hasSameType(vType, vars.get(s))) {
+                                        JSProperty property = WeexFileUtil.getVarDeclaration(completionParameters.getPosition(), s);
+                                        if (property == null || property.getValue() == null) {
+                                            continue;
+                                        } else {
+                                            String v = property.getValue().getText();
+                                            String guessedType = CodeUtil.guessStringType(v);
+                                            if (!WeexFileUtil.hasSameType(vType, guessedType)) {
+                                                continue;
+                                            } else {
+                                                typeText = guessedType + " string";
+                                            }
+                                        }
                                     }
                                     resultSet.addElement(LookupElementBuilder.create("{{" + s + "}}")
                                             .withLookupString(s)
@@ -60,7 +75,7 @@ public class WeexCompletionContributor extends CompletionContributor {
                                                 }
                                             })
                                             .withBoldness(true)
-                                            .withTypeText(vars.get(s)));
+                                            .withTypeText(typeText));
 
                                 }
                             }

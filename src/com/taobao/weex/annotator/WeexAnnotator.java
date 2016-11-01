@@ -11,6 +11,7 @@ import com.intellij.psi.html.HtmlTag;
 import com.intellij.psi.xml.*;
 import com.taobao.weex.lint.*;
 import com.taobao.weex.quickfix.QuickFixAction;
+import com.taobao.weex.utils.CodeUtil;
 import com.taobao.weex.utils.WeexFileUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -74,11 +75,8 @@ public class WeexAnnotator implements Annotator {
     @NotNull
     LintResult verifyDataType(String type, String s) {
 
-        if (s.contains(" in ")) {
-            String[] tmp = s.split("\\s+in\\s+");
-            if (tmp.length == 2) {
-                s = tmp[1];
-            }
+        if ("function".equals(type.toLowerCase())) {
+            return verifyFunction(s);
         }
 
         LintResult result = new LintResult();
@@ -89,15 +87,14 @@ public class WeexAnnotator implements Annotator {
             return result;
         }
 
+        s = CodeUtil.getVarNameFromMustache(s);
+
         if (moduleExports == null) {
             result.setCode(LintResultType.UNRESOLVED_VAR);
             result.setDesc("Unresolved property '" + s + "'");
             return result;
         }
         JSProperty data = moduleExports.findProperty("data");
-        if ("function".equals(type.toLowerCase())) {
-            return verifyFunction(s);
-        }
 
         if (data == null || data.getValue() == null) {
             result.setCode(LintResultType.UNRESOLVED_VAR);
@@ -119,6 +116,16 @@ public class WeexAnnotator implements Annotator {
                     result.setDesc("Lint passed");
                     return result;
                 } else {
+                    JSExpression expression = ((JSProperty) element).getValue();
+                    if (expression != null) {
+                        String value = expression.getText();
+                        String guessedType = CodeUtil.guessStringType(value);
+                        if (match(type, guessedType)) {
+                            result.setCode(LintResultType.PASSED);
+                            result.setDesc("Lint passed");
+                            return result;
+                        }
+                    }
                     result.setCode(LintResultType.WRONG_VALUE_TYPE);
                     result.setDesc("Wrong property type. expect " + type + ", found " + typeString);
                     return result;
@@ -130,7 +137,12 @@ public class WeexAnnotator implements Annotator {
         return result;
     }
 
-    private LintResult verifyFunction(String s) {
+    private
+    @NotNull
+    LintResult verifyFunction(String s) {
+
+        s = CodeUtil.getFunctionNameFromMustache(s);
+
         LintResult result = new LintResult();
 
         if (moduleExports == null) {
@@ -236,7 +248,8 @@ public class WeexAnnotator implements Annotator {
                 }
 
                 if (extAttrs.contains(attrName)) {
-                    if (!WeexFileUtil.isMustacheValue(attrValue) && validAttr != null) {
+                    if (!WeexFileUtil.isMustacheValue(attrValue) && validAttr != null && !CodeUtil.maybeInLineExpression(attrValue)) {
+
                         //正则匹配
                         if (validAttr.valuePattern != null) {
                             if (!validAttr.match(attrValue)) {
@@ -254,7 +267,11 @@ public class WeexAnnotator implements Annotator {
                         }
                     }
                 } else {
-                    annotationHolder.createInfoAnnotation(attr, "Not weex defined attribute '" + attrName + "'");
+                    if (CodeUtil.maybeInLineExpression(attrValue)) {
+                        //TODO: checking expression
+                    } else {
+                        annotationHolder.createInfoAnnotation(attr, "Not weex defined attribute '" + attrName + "'");
+                    }
                 }
             }
 

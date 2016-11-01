@@ -46,7 +46,7 @@ public class QuickFixAction extends BaseIntentionAction {
     @Override
     public String getText() {
         String t = "function".equals(type) ? "function " : "variable ";
-        return "Create " + t + name;
+        return "Create " + t + "'" + name + "'";
     }
 
     @Nls
