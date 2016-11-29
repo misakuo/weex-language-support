@@ -100,10 +100,11 @@ public class WeexFileUtil {
     public static JSObjectLiteralExpression getExportsStatement(PsiElement anyElementOnWeexScript) {
         ensureFile(anyElementOnWeexScript);
 
-        if (cachedExportsStatement != null) {
+        if (isValid(cachedExportsStatement)) {
             return cachedExportsStatement;
         }
 
+        //WELCOME TO HELL!!!
         PsiFile file = anyElementOnWeexScript.getContainingFile();
         if (file instanceof XmlFile) {
             XmlDocument document = ((XmlFile) file).getDocument();
@@ -137,6 +138,25 @@ public class WeexFileUtil {
             }
         }
         return cachedExportsStatement;
+    }
+
+    private static boolean isValid(JSObjectLiteralExpression expression) {
+        if (expression == null) {
+            return false;
+        }
+        try {
+            PsiFile file = expression.getContainingFile();
+            if (file == null) {
+                return false;
+            }
+        } catch (PsiInvalidElementAccessException e) {
+            return false;
+        }
+        JSProperty data = expression.findProperty("data");
+        if (data == null || data.getValue() == null) {
+            return false;
+        }
+        return true;
     }
 
     public static Map<String, String> getAllVarNames(PsiElement any) {
