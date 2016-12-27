@@ -1,7 +1,7 @@
 <idea-plugin version="2">
     <id>com.taobao.weex.lang</id>
     <name>Weex Language Support</name>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <vendor email="furmint@foxmail.com" url="https://github.com/misakuo/weex-language-support">moxun</vendor>
 
     <description><![CDATA[
@@ -31,6 +31,8 @@
 
     <change-notes><![CDATA[
       <ul>
+      <li><b>1.2.2:</b>
+        <br> update new file template.
       <li><b>1.2.1:</b>
         <br> more broadly support for completion by intention.
       <li><b>1.2.0:</b>
@@ -77,6 +79,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
+        <!--<internalFileTemplate name="weex_file"/>-->
         <intentionAction>
             <className>com.taobao.weex.intention.TagTextIntention</className>
             <category>Weex</category>

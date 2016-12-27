@@ -103,6 +103,13 @@ public class WeexAnnotator implements Annotator {
         }
 
         for (PsiElement element : data.getValue().getChildren()) {
+
+            if (!(element instanceof JSProperty)) {
+                result.setCode(LintResultType.PASSED);
+                result.setDesc("Unsupported data type: " + element.getClass().getSimpleName());
+                return result;
+            }
+
             String varName = ((JSProperty) element).getName();
             if (varName == null) {
                 result.setCode(LintResultType.UNRESOLVED_VAR);
