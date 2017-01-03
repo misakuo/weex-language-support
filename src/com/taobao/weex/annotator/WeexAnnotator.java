@@ -89,6 +89,14 @@ public class WeexAnnotator implements Annotator {
 
         s = CodeUtil.getVarNameFromMustache(s);
 
+        if (type != null && type.equalsIgnoreCase("boolean")) {
+            if (CodeUtil.maybeBooleanExpression(s)) {
+                result.setCode(LintResultType.PASSED);
+                result.setDesc("Boolean Expression");
+                return result;
+            }
+        }
+
         if (moduleExports == null) {
             result.setCode(LintResultType.UNRESOLVED_VAR);
             result.setDesc("Unresolved property '" + s + "'");
@@ -336,12 +344,12 @@ public class WeexAnnotator implements Annotator {
 
     private void checkStructure(PsiElement document, @NotNull AnnotationHolder annotationHolder) {
         PsiElement[] children = document.getChildren();
-        List<String> acceptedTag = Arrays.asList("template", "script", "style");
+        List<String> acceptedTag = Arrays.asList("template","element","script", "style");
         for (PsiElement element : children) {
             if (element instanceof HtmlTag) {
                 if (!acceptedTag.contains(((HtmlTag) element).getName().toLowerCase())) {
                     annotationHolder.createErrorAnnotation(element, "Invalid tag '"
-                            + ((HtmlTag) element).getName() + "', only the [template, script, style] tags are allowed here.");
+                            + ((HtmlTag) element).getName() + "', only the [template, element, script, style] tags are allowed here.");
                 }
                 checkAttributes((XmlTag) element, annotationHolder);
             } else {

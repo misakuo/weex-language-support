@@ -58,8 +58,22 @@ public class CodeUtil {
             return false;
         }
 
-        String[] operators = {"+", "-", "*", "/", "(", ")", "=", "!", "[", "]", "."};
+        String[] operators = {"+", "-", "*", "/", "(", ")", "=", "!", "[", "]", ".", "|", "&"};
 
+        for (String op : operators) {
+            if (s.contains(op)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean maybeBooleanExpression(String s) {
+        if (s == null) {
+            return false;
+        }
+
+        String[] operators = {"?", "==", "!=", ":", ">", "<", "|", "&", "!"};
         for (String op : operators) {
             if (s.contains(op)) {
                 return true;

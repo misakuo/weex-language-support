@@ -381,9 +381,7 @@
       "list",
       "scroller"
     ],
-    "child": [
-      "loading-indicator"
-    ]
+    "child": null
   },
   {
     "tag": "loading",
@@ -408,9 +406,7 @@
       "list",
       "scroller"
     ],
-    "child": [
-      "loading-indicator"
-    ]
+    "child": null
   },
   {
     "tag": "header",
