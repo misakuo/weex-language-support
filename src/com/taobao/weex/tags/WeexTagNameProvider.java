@@ -15,6 +15,7 @@ import com.taobao.weex.WeexIcons;
 import com.taobao.weex.lint.DirectiveLint;
 import com.taobao.weex.lint.WeexTag;
 import com.taobao.weex.utils.ArchiveUtil;
+import com.taobao.weex.utils.WeexFileUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,6 +28,11 @@ import java.util.Set;
 public class WeexTagNameProvider implements XmlTagNameProvider, XmlElementDescriptorProvider {
     @Override
     public void addTagNameVariants(List<LookupElement> list, @NotNull XmlTag xmlTag, String prefix) {
+
+        if (!WeexFileUtil.isOnWeexFile(xmlTag)) {
+            return;
+        }
+
         if (!(xmlTag instanceof HtmlTag)) {
             return;
         }
@@ -57,6 +63,11 @@ public class WeexTagNameProvider implements XmlTagNameProvider, XmlElementDescri
     @Nullable
     @Override
     public XmlElementDescriptor getDescriptor(XmlTag xmlTag) {
+
+        if (!WeexFileUtil.isOnWeexFile(xmlTag)) {
+            return null;
+        }
+
         Set<String> tags = DirectiveLint.getWeexTagNames();
         List<String> htmlTags = DirectiveLint.getHtmlTags();
         if (tags.contains(xmlTag.getName()) && !htmlTags.contains(xmlTag.getName())) {
